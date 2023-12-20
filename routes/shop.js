@@ -1,5 +1,5 @@
 import express from 'express'
-import { displayProducts, moreProducts, getProduct } from '../controllers/shop.js'
+import { displayProducts, moreProducts, getProduct, postCart } from '../controllers/shop.js'
 
 const shoprouter = express.Router();
 
@@ -11,7 +11,7 @@ shoprouter.get('/products/:productId', getProduct)
 
 // shoprouter.get('/cart', showCart)
 
-// shoprouter.post('/cart', postCart)
+shoprouter.post('/cart', postCart)
 
 // shoprouter.post('/delete-cart-item', postDeleteCartProduct)
 

@@ -6,6 +6,7 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import { errorPage } from './controllers/shop.js'
 import { mongoConnect } from './util/database.js'
+import { User } from './models/user.js'
 
 
 const app = express()
@@ -20,13 +21,12 @@ app.use(bodyParser.urlencoded({extended: false}))
 app.use(express.static(path.join(dirname, 'public')))
 
 app.use((req, res, next) => {
-   // User.findByPk(1)
-   //    .then(user => {
-   //       req.user = user
-   //       next()
-   //    })
-   //    .catch(err => console.log(err))
-   next()
+   User.findById('657ff0b591fb6301f910e16d')
+      .then(user => {
+         req.user = new User(user.username, user.email, user.cart, user._id)
+         next()
+      })
+      .catch(err => console.log(err))
 })
 
 app.use('/admin', adminrouter)

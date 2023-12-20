@@ -23,3 +23,14 @@ export const getProduct = (req, res, next) => {
         console.log(product)
     })
 }
+
+export const postCart = (req, res, next) => {
+    const prodId = req.body.productId
+    return Product.fetchProduct(prodId)
+        .then(product => {
+            return req.user.addToCart(product)
+        })
+        .then(result => {
+            console.log(result)
+        })
+}
