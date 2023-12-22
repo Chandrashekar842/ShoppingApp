@@ -1,4 +1,4 @@
-import {Product} from '../models/product.js'
+import { Product } from '../models/product.js'
 
 export const errorPage = (req, res, next) => {
     res.redirect('/404')
@@ -6,20 +6,20 @@ export const errorPage = (req, res, next) => {
 
 export const displayProducts = (req, res, next) => {
     Product.fetchAll().then(products => {
-        res.render('shop/product-list', {prods: products, pageTitle: "Products", path: "/products"})
+        res.render('shop/product-list', { prods: products, pageTitle: "Products", path: "/products" })
     })
 }
 
-export const moreProducts = (req,res, next) => {
+export const moreProducts = (req, res, next) => {
     Product.fetchAll().then(products => {
-        res.render('shop/index', {prods: products, pageTitle: "Shop", path: "/"})
+        res.render('shop/index', { prods: products, pageTitle: "Shop", path: "/" })
     })
 }
 
 export const getProduct = (req, res, next) => {
     const prodId = req.params.productId
     Product.fetchProduct(prodId).then(product => {
-        res.render('shop/product-detail', {prod: product, pageTitle: product.title, path: "/products"})
+        res.render('shop/product-detail', { prod: product, pageTitle: product.title, path: "/products" })
         console.log(product)
     })
 }
@@ -31,6 +31,15 @@ export const postCart = (req, res, next) => {
             return req.user.addToCart(product)
         })
         .then(result => {
-            console.log(result)
+            res.redirect('/cart')
         })
+        .catch(err => console.log(err))
+}
+
+export const getCart = (req, res, next) => {
+    req.user.getCart()
+        .then(products => {
+            res.render('shop/cart', { path: '/cart', pageTitle: 'Your Cart', products: products })
+        })
+        .catch(err => console.log(err))
 }

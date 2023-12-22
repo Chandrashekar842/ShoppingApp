@@ -1,5 +1,5 @@
 import express from 'express'
-import { displayProducts, moreProducts, getProduct, postCart } from '../controllers/shop.js'
+import { displayProducts, moreProducts, getProduct, postCart, getCart } from '../controllers/shop.js'
 
 const shoprouter = express.Router();
 
@@ -9,7 +9,7 @@ shoprouter.get('/products', displayProducts)
 
 shoprouter.get('/products/:productId', getProduct)
 
-// shoprouter.get('/cart', showCart)
+shoprouter.get('/cart', getCart)
 
 shoprouter.post('/cart', postCart)
 
