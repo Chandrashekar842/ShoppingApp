@@ -31,6 +31,7 @@ export const postCart = (req, res, next) => {
             return req.user.addToCart(product)
         })
         .then(result => {
+            console.log(result)
             res.redirect('/cart')
         })
         .catch(err => console.log(err))
@@ -40,6 +41,36 @@ export const getCart = (req, res, next) => {
     req.user.getCart()
         .then(products => {
             res.render('shop/cart', { path: '/cart', pageTitle: 'Your Cart', products: products })
+        })
+        .catch(err => console.log(err))
+}
+
+export const postDeleteCartProduct = (req, res, next) => {
+    const productId = req.body.productId
+    
+    req.user.deleteItemFromCart(productId)
+        .then(result => {
+            res.redirect('/cart');
+        })
+        .catch(err => console.log(err))
+}
+
+export const postOrder = (req, res, next) => {
+    req.user.addOrder()
+        .then(result => {
+            res.redirect('/orders')
+        })
+        .catch(err => console.log(err))
+}
+
+export const getOrders = (req, res, next) => {
+    req.user.getOrders()
+        .then(orders => {
+            res.render('shop/orders', {
+                path: '/orders',
+                pageTitle:'Your Orders',
+                orders: orders
+            })
         })
         .catch(err => console.log(err))
 }
