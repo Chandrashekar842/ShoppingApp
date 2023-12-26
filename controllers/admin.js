@@ -1,5 +1,4 @@
-// import { Product } from '../models/product.js'
-import mongodb from 'mongodb'
+import { Product } from '../models/product.js'
 
 export const getAddProduct = (req, res, next) => {
   res.render('admin/edit-product', {
@@ -14,7 +13,13 @@ export const postAddProduct = (req, res, next) => {
   const imageUrl = req.body.imageUrl;
   const price = req.body.price;
   const description = req.body.description;
-  const product = new Product(title, imageUrl, price, description, null, req.user._id);
+  const product = new Product({
+    title: title,
+    imageUrl: imageUrl,
+    price: price,
+    description: description,
+    userId: req.user
+  });
   product
     .save()
     .then(result => {
@@ -28,7 +33,7 @@ export const postAddProduct = (req, res, next) => {
 };
 
 export const productsForAdmin = (req, res, next) => {
-  Product.fetchAll()
+  Product.find()
     .then(products => {
       res.render('admin/products', { prods: products, pageTitle: 'Admin Products', path: '/admin/products' })
     })
@@ -40,7 +45,7 @@ export const getEditProduct = (req, res, next) => {
     res.redirect('admin/products')
   }
   const prodId = req.params.productId
-  Product.fetchProduct(prodId)
+  Product.findById(prodId)
     .then(product => {
       res.render('admin/edit-product', { product: product, pageTitle: 'Edit product', path: '/admin/products', editing: true })
     })
@@ -52,18 +57,23 @@ export const postEditProduct = (req, res, next) => {
   const updatedImageUrl = req.body.imageUrl
   const updatedPrice = req.body.price
   const updatedDescription = req.body.description
-  const product = new Product(updatedTitle, updatedImageUrl, updatedPrice, updatedDescription, new mongodb.ObjectId(prodId))
-  product.save()
-    .then(result => {
-      console.log(result)
-      res.redirect('/admin/products')
-    })
-    .catch(err => console.log(err))
+  Product.findById(prodId).then(product => {
+    product.title = updatedTitle,
+    product.imageUrl = updatedImageUrl,
+    product.price = updatedPrice,
+    product.description = updatedDescription
+    return product.save()
+  })
+  .then(result => {
+    console.log('Updated Product')
+    res.redirect('/admin/products')
+  })
+  .catch(err => console.log(err))
 }
 
 export const deleteProduct = (req, res, next) => {
   const prodId = req.params.productId
-  Product.deleteById(prodId)
+  Product.findByIdAndDelete(prodId)
     .then(() => {
       res.redirect('/admin/products')
     })

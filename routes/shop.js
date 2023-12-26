@@ -3,11 +3,11 @@ import { displayProducts, moreProducts, getProduct, postCart, getCart, postDelet
 
 const shoprouter = express.Router();
 
-// shoprouter.get('/', moreProducts)
+shoprouter.get('/', moreProducts)
 
-// shoprouter.get('/products', displayProducts)
+shoprouter.get('/products', displayProducts)
 
-// shoprouter.get('/products/:productId', getProduct)
+shoprouter.get('/products/:productId', getProduct)
 
 // shoprouter.get('/cart', getCart)
 
