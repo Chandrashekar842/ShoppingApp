@@ -1,4 +1,4 @@
-import { Product } from '../models/product.js'
+// import { Product } from '../models/product.js'
 import mongodb from 'mongodb'
 
 export const getAddProduct = (req, res, next) => {

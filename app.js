@@ -5,8 +5,8 @@ import shoprouter from './routes/shop.js'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { errorPage } from './controllers/shop.js'
-import { mongoConnect } from './util/database.js'
-import { User } from './models/user.js'
+// import { User } from './models/user.js'
+import mongoose from 'mongoose'
 
 
 const app = express()
@@ -34,9 +34,13 @@ app.use(shoprouter)
 
 app.use(errorPage)
 
-mongoConnect(() => {
-   app.listen(3000)
-})
+mongoose.connect('mongodb+srv://Chandu21:Chandu21@cluster0.0sbmxs4.mongodb.net/shop?retryWrites=true&w=majority')
+      .then(result => {
+         app.listen(3000, () => {
+            console.log('Connected to Database using Mongoose')
+         })
+      })
+      .catch(err => console.log(err))
 
 
 

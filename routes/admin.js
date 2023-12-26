@@ -3,16 +3,16 @@ import { getAddProduct, postAddProduct, productsForAdmin, getEditProduct, postEd
 
 const adminrouter = express.Router()
 
-adminrouter.get('/add-product', getAddProduct)
+// adminrouter.get('/add-product', getAddProduct)
 
-adminrouter.post('/add-product', postAddProduct)
+// adminrouter.post('/add-product', postAddProduct)
 
-adminrouter.get('/products', productsForAdmin)
+// adminrouter.get('/products', productsForAdmin)
 
-adminrouter.get('/edit-product/:productId', getEditProduct)
+// adminrouter.get('/edit-product/:productId', getEditProduct)
 
-adminrouter.post('/edit-product', postEditProduct)
+// adminrouter.post('/edit-product', postEditProduct)
 
-adminrouter.post('/delete-product/:productId', deleteProduct)
+// adminrouter.post('/delete-product/:productId', deleteProduct)
 
 export default adminrouter; 
