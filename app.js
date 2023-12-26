@@ -5,8 +5,9 @@ import shoprouter from './routes/shop.js'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { errorPage } from './controllers/shop.js'
-// import { User } from './models/user.js'
+import { User } from './models/user.js'
 import mongoose from 'mongoose'
+import { getDefaultAutoSelectFamily } from 'net'
 
 
 const app = express()
@@ -21,9 +22,9 @@ app.use(bodyParser.urlencoded({extended: false}))
 app.use(express.static(path.join(dirname, 'public')))
 
 app.use((req, res, next) => {
-   User.findById('6589062d8b74e03c72aa3c85')
+   User.findById('658a74ed79fdfbae08327788')
       .then(user => {
-         req.user = new User(user.name, user.email, user.cart, user._id)
+         req.user = user
          next()
       })
       .catch(err => console.log(err))
@@ -36,6 +37,18 @@ app.use(errorPage)
 
 mongoose.connect('mongodb+srv://Chandu21:Chandu21@cluster0.0sbmxs4.mongodb.net/shop?retryWrites=true&w=majority')
       .then(result => {
+         User.findOne().then(user => {
+            if(!user) {
+               const user = new User({
+                  name: "Chandu",
+                  email: "chandu@mial.com",
+                  cart: {
+                     items: []
+                  }
+               })
+               user.save()
+            }
+         })
          app.listen(3000, () => {
             console.log('Connected to Database using Mongoose')
          })
