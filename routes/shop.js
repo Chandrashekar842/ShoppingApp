@@ -9,15 +9,15 @@ shoprouter.get('/products', displayProducts)
 
 shoprouter.get('/products/:productId', getProduct)
 
-// shoprouter.get('/cart', getCart)
+shoprouter.get('/cart', getCart)
 
-// shoprouter.post('/cart', postCart)
+shoprouter.post('/cart', postCart)
 
-// shoprouter.post('/delete-cart-item', postDeleteCartProduct)
+shoprouter.post('/delete-cart-item', postDeleteCartProduct)
 
-// shoprouter.post('/create-order', postOrder)
+shoprouter.post('/create-order', postOrder)
 
-// shoprouter.get('/orders', getOrders)
+shoprouter.get('/orders', getOrders)
 
 // shoprouter.get('/checkout', checkoutProducts)
 

@@ -4,7 +4,7 @@ import adminrouter from './routes/admin.js'
 import shoprouter from './routes/shop.js'
 import path from 'path'
 import { fileURLToPath } from 'url'
-import { errorPage } from './controllers/shop.js'
+import { error } from './controllers/error.js'
 import { User } from './models/user.js'
 import mongoose from 'mongoose'
 import { getDefaultAutoSelectFamily } from 'net'
@@ -33,7 +33,7 @@ app.use((req, res, next) => {
 app.use('/admin', adminrouter)
 app.use(shoprouter)
 
-app.use(errorPage)
+app.use(error)
 
 mongoose.connect('mongodb+srv://Chandu21:Chandu21@cluster0.0sbmxs4.mongodb.net/shop?retryWrites=true&w=majority')
       .then(result => {
