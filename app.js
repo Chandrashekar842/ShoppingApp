@@ -2,6 +2,7 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import adminrouter from './routes/admin.js'
 import shoprouter from './routes/shop.js'
+import authrouter from './routes/auth.js'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { error } from './controllers/error.js'
@@ -32,6 +33,7 @@ app.use((req, res, next) => {
 
 app.use('/admin', adminrouter)
 app.use(shoprouter)
+app.use(authrouter)
 
 app.use(error)
 
