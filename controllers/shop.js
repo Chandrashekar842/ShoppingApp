@@ -39,7 +39,12 @@ export const getCart = (req, res, next) => {
         .populate('cart.items.productId')
         .then(user => {
             const products = user.cart.items
-            res.render('shop/cart', { path: '/cart', pageTitle: 'Your Cart', products: products })
+            let total = 0;
+            products.map(product => {
+                let cost = product.quantity * product.productId.price;
+                total = total + cost;
+            })
+            res.render('shop/cart', { path: '/cart', pageTitle: 'Your Cart', products: products, total: total })
         })
         .catch(err => console.log(err))
 }
