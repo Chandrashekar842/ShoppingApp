@@ -3,20 +3,35 @@ import { Order } from '../models/order.js'
 
 export const displayProducts = (req, res, next) => {
     Product.find().then(products => {
-        res.render('shop/product-list', { prods: products, pageTitle: "Products", path: "/products" })
+        res.render('shop/product-list', { 
+            prods: products, 
+            pageTitle: "Products", 
+            path: "/products",
+            isAuthenticated: req.isLoggedIn
+        })
     })
 }
 
 export const moreProducts = (req, res, next) => {
     Product.find().then(products => {
-        res.render('shop/index', { prods: products, pageTitle: "Shop", path: "/" })
+        res.render('shop/index', { 
+            prods: products, 
+            pageTitle: "Shop", 
+            path: "/",
+            isAuthenticated: req.isLoggedIn
+        })
     })
 }
 
 export const getProduct = (req, res, next) => {
     const prodId = req.params.productId
     Product.findById(prodId).then(product => {
-        res.render('shop/product-detail', { prod: product, pageTitle: product.title, path: "/products" })
+        res.render('shop/product-detail', { 
+            prod: product, 
+            pageTitle: product.title, 
+            path: "/products",
+            isAuthenticated: req.isLoggedIn
+         })
         console.log(product)
     })
 }
@@ -44,7 +59,13 @@ export const getCart = (req, res, next) => {
                 let cost = product.quantity * product.productId.price;
                 total = total + cost;
             })
-            res.render('shop/cart', { path: '/cart', pageTitle: 'Your Cart', products: products, total: total })
+            res.render('shop/cart', { 
+                path: '/cart', 
+                pageTitle: 'Your Cart', 
+                products: products, 
+                total: total,
+                isAuthenticated: req.isLoggedIn 
+            })
         })
         .catch(err => console.log(err))
 }
@@ -92,7 +113,8 @@ export const getOrders = (req, res, next) => {
             res.render('shop/orders', {
                 path: '/orders',
                 pageTitle:'Your Orders',
-                orders: orders
+                orders: orders,
+                isAuthenticated: req.isLoggedIn
             })
         })
         .catch(err => console.log(err))

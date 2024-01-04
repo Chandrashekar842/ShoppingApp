@@ -4,7 +4,8 @@ export const getAddProduct = (req, res, next) => {
   res.render('admin/edit-product', {
     pageTitle: 'Add-Product',
     path: '/admin/add-product',
-    editing: false
+    editing: false,
+    isAuthenticated: req.isLoggedIn
   })
 }
 
@@ -35,7 +36,12 @@ export const postAddProduct = (req, res, next) => {
 export const productsForAdmin = (req, res, next) => {
   Product.find()
     .then(products => {
-      res.render('admin/products', { prods: products, pageTitle: 'Admin Products', path: '/admin/products' })
+      res.render('admin/products', { 
+        prods: products, 
+        pageTitle: 'Admin Products', 
+        path: '/admin/products',
+        isAuthenticated: req.isLoggedIn
+      })
     })
 }
 
@@ -47,7 +53,13 @@ export const getEditProduct = (req, res, next) => {
   const prodId = req.params.productId
   Product.findById(prodId)
     .then(product => {
-      res.render('admin/edit-product', { product: product, pageTitle: 'Edit product', path: '/admin/products', editing: true })
+      res.render('admin/edit-product', { 
+        product: product, 
+        pageTitle: 'Edit product', 
+        path: '/admin/products', 
+        editing: true,
+        isAuthenticated: req.isLoggedIn
+      })
     })
 }
 

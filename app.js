@@ -8,8 +8,8 @@ import { fileURLToPath } from 'url'
 import { error } from './controllers/error.js'
 import { User } from './models/user.js'
 import mongoose from 'mongoose'
-import { getDefaultAutoSelectFamily } from 'net'
-
+import session from 'express-session'
+import connectMongoDbSession from 'connect-mongodb-session'
 
 const app = express()
 
@@ -21,6 +21,13 @@ const dirname = path.dirname(filename)
 
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(express.static(path.join(dirname, 'public')))
+
+const MongoDBStore = connectMongoDbSession(session)
+const store = new MongoDBStore({
+   uri: 'mongodb+srv://Chandu21:Chandu21@cluster0.0sbmxs4.mongodb.net/shop',
+   collection: 'sessions'
+})
+app.use(session({secret: 'My secret', resave: false, saveUninitialized: false, store: store}))
 
 app.use((req, res, next) => {
    User.findById('658a74ed79fdfbae08327788')
