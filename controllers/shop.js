@@ -2,12 +2,13 @@ import { Product } from '../models/product.js'
 import { Order } from '../models/order.js'
 
 export const displayProducts = (req, res, next) => {
-    Product.find().then(products => {
-        res.render('shop/product-list', { 
-            prods: products, 
-            pageTitle: "Products", 
-            path: "/products",
-            isAuthenticated: req.isLoggedIn
+    Product.find()
+        .then(products => {
+             res.render('shop/product-list', { 
+                prods: products, 
+                pageTitle: "Products", 
+                path: "/products",
+                isAuthenticated: req.session.isLoggedIn
         })
     })
 }
@@ -18,7 +19,7 @@ export const moreProducts = (req, res, next) => {
             prods: products, 
             pageTitle: "Shop", 
             path: "/",
-            isAuthenticated: req.isLoggedIn
+            isAuthenticated: req.session.isLoggedIn
         })
     })
 }
@@ -30,7 +31,7 @@ export const getProduct = (req, res, next) => {
             prod: product, 
             pageTitle: product.title, 
             path: "/products",
-            isAuthenticated: req.isLoggedIn
+            isAuthenticated: req.session.isLoggedIn
          })
         console.log(product)
     })
@@ -64,7 +65,7 @@ export const getCart = (req, res, next) => {
                 pageTitle: 'Your Cart', 
                 products: products, 
                 total: total,
-                isAuthenticated: req.isLoggedIn 
+                isAuthenticated: req.session.isLoggedIn 
             })
         })
         .catch(err => console.log(err))
@@ -114,7 +115,7 @@ export const getOrders = (req, res, next) => {
                 path: '/orders',
                 pageTitle:'Your Orders',
                 orders: orders,
-                isAuthenticated: req.isLoggedIn
+                isAuthenticated: req.session.isLoggedIn
             })
         })
         .catch(err => console.log(err))

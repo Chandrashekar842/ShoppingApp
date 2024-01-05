@@ -5,7 +5,7 @@ export const getAddProduct = (req, res, next) => {
     pageTitle: 'Add-Product',
     path: '/admin/add-product',
     editing: false,
-    isAuthenticated: req.isLoggedIn
+    isAuthenticated: req.session.isLoggedIn
   })
 }
 
@@ -40,7 +40,7 @@ export const productsForAdmin = (req, res, next) => {
         prods: products, 
         pageTitle: 'Admin Products', 
         path: '/admin/products',
-        isAuthenticated: req.isLoggedIn
+        isAuthenticated: req.session.isLoggedIn
       })
     })
 }
@@ -58,7 +58,7 @@ export const getEditProduct = (req, res, next) => {
         pageTitle: 'Edit product', 
         path: '/admin/products', 
         editing: true,
-        isAuthenticated: req.isLoggedIn
+        isAuthenticated: req.session.isLoggedIn
       })
     })
 }

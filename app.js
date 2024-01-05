@@ -30,7 +30,10 @@ const store = new MongoDBStore({
 app.use(session({secret: 'My secret', resave: false, saveUninitialized: false, store: store}))
 
 app.use((req, res, next) => {
-   User.findById('658a74ed79fdfbae08327788')
+   if(!req.session.user) {
+      return next()
+   }
+   User.findById(req.session.user._id)
       .then(user => {
          req.user = user
          next()
